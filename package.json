@@ -1,21 +1,33 @@
 {
-  "name": "@releaset/source",
-  "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {},
-  "private": true,
-  "dependencies": {},
-  "devDependencies": {
-    "@nx/js": "20.1.2",
-    "@swc-node/register": "~1.9.1",
-    "@swc/core": "~1.5.7",
-    "@swc/helpers": "~0.5.11",
-    "nx": "20.1.2",
-    "prettier": "^2.6.2",
-    "tslib": "^2.3.0",
-    "typescript": "~5.5.2"
+  "name": "releaset",
+  "version": "0.0.12",
+  "bin": {
+    "releaset": "./dist/index.js"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "description": "Simple CLI to release changelogs. CICD-friendly.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc && copyfiles -u 1 src/bash/*.sh dist"
+  },
+  "keywords": [
+    "releaset",
+    "changesets",
+    "changesets/cli",
+    "changelog",
+    "publish"
+  ],
+  "author": "Alfredchow2338",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "copyfiles": "^2.4.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@types/node": "^22.9.1",
+    "commander": "^12.1.0"
+  }
 }
