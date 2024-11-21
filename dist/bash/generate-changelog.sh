@@ -5,6 +5,7 @@ IS_DEV=$2
 PR_TAG=$3
 REPO_URL=$4
 FILTERED_TAG=$5
+OUT_DIR=$6
 
 remove_first_line() {
     local filename="$1" 
@@ -22,23 +23,17 @@ remove_first_line() {
     fi
 }
 
-if [ -z $PROJECT_NAME ]; then
-    CHANGESET_DIR=.releaset
-else
-    CHANGESET_DIR=".releaset/$PROJECT_NAME"
-fi
+INFO_FILE="$OUT_DIR/info.json"
 
-INFO_FILE="$CHANGESET_DIR/info.json"
-
-mkdir -p "$CHANGESET_DIR"
+mkdir -p "$OUT_DIR"
 
 if $IS_DEV; then
-    OUTPUT_FILE="$CHANGESET_DIR/CHANGELOG_PR.md"
+    OUTPUT_FILE="$OUT_DIR/CHANGELOG_PR.md"
     LAST_UPDATED_KEY="last_pr_update_tag"
     LAST_UPDATED_DT_KEY="last_pr_update_tag_dt"
     FILTER_FLAG=""
 else
-    OUTPUT_FILE="$CHANGESET_DIR/CHANGELOG.md"
+    OUTPUT_FILE="$OUT_DIR/CHANGELOG.md"
     LAST_UPDATED_KEY="last_update_tag"
     LAST_UPDATED_DT_KEY="last_update_tag_dt"
     FILTER_FLAG="-v "
@@ -63,8 +58,8 @@ if [[ -z "$last_tag_dt" ]]; then
 else
     log_existed=true
     ORIGINAL_FILE=$OUTPUT_FILE
-    OUTPUT_FILE="$CHANGESET_DIR/CHANGELOG_TEMP.md"
-    NEW_OUTPUT_FILE="$CHANGESET_DIR/CHANGELOG_NEW.md"
+    OUTPUT_FILE="$OUT_DIR/CHANGELOG_TEMP.md"
+    NEW_OUTPUT_FILE="$OUT_DIR/CHANGELOG_NEW.md"
     echo "# $PROJECT_NAME" > $OUTPUT_FILE
 
     if [[ -z "$PR_TAG" ]]; then
@@ -116,7 +111,6 @@ done
 if [ ! -z "$latest_tag" ]; then
     
     if [[ ! -f "$INFO_FILE" ]]; then
-      echo "not have info.json"
       echo "{}" > "$INFO_FILE"
     fi
 
