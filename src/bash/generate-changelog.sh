@@ -9,7 +9,6 @@ OUT_DIR=$6
 
 remove_first_line() {
     local filename="$1" 
-
     if [ -f "$filename" ]; then
         if [[ "$OSTYPE" == "darwin"* ]]; then
             sed -i '' '1d' "$filename"
@@ -17,9 +16,6 @@ remove_first_line() {
             # Linux system
             sed -i '1d' "$filename"
         fi
-        echo "First line removed from $filename."
-    else
-        echo "File does not exist."
     fi
 }
 
@@ -91,8 +87,6 @@ counter=0
 latest_tag=""
 latest_tag_date=""
 
-echo $tags
-
 for tag in $tags; do
     # First iteration
     if [ $counter -eq 0 ]; then
@@ -143,4 +137,8 @@ if [[ $log_existed = true ]]; then
     rm $OUTPUT_FILE $NEW_OUTPUT_FILE 2> /dev/null
 fi
 
-echo "Changelog generation complete. See $OUTPUT_FILE"
+if [[ $log_existed = true ]]; then
+    echo "Changelog generation complete. See $ORIGINAL_FILE"
+else
+    echo "Changelog generation complete. See $OUTPUT_FILE"
+fi
