@@ -1,5 +1,5 @@
 {
-  "name": "@alfredchow2338/releaset",
+  "name": "releaset",
   "version": "0.0.16",
   "bin": {
     "releaset": "./dist/index.js"
