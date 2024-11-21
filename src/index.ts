@@ -14,6 +14,7 @@ program
   .option('--prTag <tag>', 'Specify the pre-release tag identifier')
   .option('--repoUrl <url>', 'Specify the repo url')
   .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
+  .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
   .action((options) => {
     const projectArg = options?.project ? `"${options.project}"` : `""`;
     console.log(`Project name: ${projectArg}`);
@@ -41,7 +42,7 @@ program
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg}`
+    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${options.outDir}`
     executeCommand(command)
   });
 
