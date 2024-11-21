@@ -35,7 +35,7 @@ jobs:
         create_tag: "true"
         commit_pattern: "^Release (\\S+)"
         workspace: "."
-        publish_command: "pnpm"
+        publish_command: "yarn"
         publish_args: "publish --no-interactive"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
