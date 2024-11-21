@@ -50,9 +50,17 @@ if [[ -z "$last_tag_dt" ]]; then
     echo "# $PROJECT_NAME" > $OUTPUT_FILE
     
     if [[ -z "$PR_TAG" ]]; then
-        tags=$(git tag --list "$FILTERED_TAG*" --sort=-creatordate)
+        if [[ -z "$FILTERED_TAG" ]]; then
+            tags=$(git tag --list --sort=-creatordate)
+        else
+            tags=$(git tag --list --sort=-creatordate | grep $FILTERED_TAG) 
+        fi    
     else
-        tags=$(git tag --list "$FILTERED_TAG*" --sort=-creatordate | grep $FILTER_FLAG$PR_TAG)
+        if [[ -z "$FILTERED_TAG" ]]; then
+            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG)
+        else
+            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG) | grep $FILTERED_TAG) 
+        fi
     fi
     
 else
@@ -63,9 +71,17 @@ else
     echo "# $PROJECT_NAME" > $OUTPUT_FILE
 
     if [[ -z "$PR_TAG" ]]; then
-        tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        if [[ -z "$FILTERED_TAG" ]]; then
+            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        else
+            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        vi
     else
-        tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | grep $FILTER_FLAG$PR_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        if [[ -z "$FILTERED_TAG" ]]; then
+            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTER_FLAG$PR_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        else
+            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | grep $FILTER_FLAG$PR_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
+        vi
     fi
 
 fi
