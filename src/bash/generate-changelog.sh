@@ -111,7 +111,6 @@ done
 if [ ! -z "$latest_tag" ]; then
     
     if [[ ! -f "$INFO_FILE" ]]; then
-      echo "not have info.json"
       echo "{}" > "$INFO_FILE"
     fi
 
