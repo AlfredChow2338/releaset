@@ -53,13 +53,13 @@ if [[ -z "$last_tag_dt" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
             tags=$(git tag --list --sort=-creatordate)
         else
-            tags=$(git tag --list --sort=-creatordate | grep $FILTERED_TAG) 
+            tags=$(git tag --list --sort=-creatordate | grep $FILTERED_TAG)
         fi    
     else
         if [[ -z "$FILTERED_TAG" ]]; then
             tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG)
         else
-            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG) | grep $FILTERED_TAG) 
+            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG | grep $FILTERED_TAG)
         fi
     fi
     
