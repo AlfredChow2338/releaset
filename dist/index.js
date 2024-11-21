@@ -29,12 +29,13 @@ commander_1.program
     if (options === null || options === void 0 ? void 0 : options.filterTag) {
         console.log(`Filter tag: ${filterTagArg}`);
     }
+    const outDirArg = `"${options.outDir}"`;
     if ((options === null || options === void 0 ? void 0 : options.pr) && !(options === null || options === void 0 ? void 0 : options.prTag)) {
         console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag name.');
         return;
     }
     (0, utils_1.executeCommand)(`chmod +x ${scriptPath}`);
-    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${options.outDir}`;
+    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${outDirArg}`;
     (0, utils_1.executeCommand)(command);
 });
 commander_1.program.parse(process.argv);

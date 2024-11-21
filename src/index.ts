@@ -35,6 +35,8 @@ program
       console.log(`Filter tag: ${filterTagArg}`)
     }
 
+    const outDirArg = `"${options.outDir}"`
+
     if (options?.pr && !options?.prTag) {
       console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag name.')
       return
@@ -42,7 +44,7 @@ program
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${options.outDir}`
+    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${outDirArg}`
     executeCommand(command)
   });
 
