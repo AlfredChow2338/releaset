@@ -1,6 +1,6 @@
 {
   "name": "releaset",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "bin": {
     "releaset": "./dist/index.js"
   },
