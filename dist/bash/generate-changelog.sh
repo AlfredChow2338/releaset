@@ -46,7 +46,6 @@ if [[ -z "$last_tag_dt" ]]; then
         echo "" > $OUTPUT_FILE
     else
         echo "# $PROJECT_NAME" > $OUTPUT_FILE
-    fi
     
     if [[ -z "$PR_TAG" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
@@ -72,7 +71,6 @@ else
         echo "" > $OUTPUT_FILE
     else
         echo "# $PROJECT_NAME" > $OUTPUT_FILE
-    fi
 
     if [[ -z "$PR_TAG" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
