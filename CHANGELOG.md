@@ -1,4 +1,25 @@
 # @Releaset
+## `v0.0.35` - 2024-11-25 15:31:49 +0800
+
+* [6f19d85](../../commits/6f19d854b73d7bd87dc3dab7fe3b5a8408d4b0b1) - Release 0.0.35 - alfredchow2338 (2024-11-25T15:31:49+08:00)
+* [ec43b7f](../../commits/ec43b7f5ce9141b9642515abc8b441afb9adc72a) - fix: bash script syntax - alfredchow2338 (2024-11-25T15:31:34+08:00)
+* [3ab4f93](../../commits/3ab4f93b2bd2914dd7e0a78ddacbb848df88fb93) - chore: update build - alfredchow2338 (2024-11-25T15:29:40+08:00)
+
+## `v0.0.34` - 2024-11-25 15:28:57 +0800
+
+* [62ac71a](../../commits/62ac71ad6f867b87b3d9c37bf94fb8f87bec8f0f) - Release 0.0.34 - alfredchow2338 (2024-11-25T15:28:57+08:00)
+* [41f1b1e](../../commits/41f1b1e7ee71fd9dbeb1d28916ae59ac46f91619) - fix: bash script if-else statement - alfredchow2338 (2024-11-25T15:28:31+08:00)
+
+## `v0.0.33` - 2024-11-25 15:26:20 +0800
+
+* [1c25da4](../../commits/1c25da4122b882bbb5d61e7e8837c2b267e17da6) - Release 0.0.33 - alfredchow2338 (2024-11-25T15:26:20+08:00)
+* [a548b99](../../commits/a548b99970536fa55531fa4a9d16609f78862df4) - feat: remove repo url option - alfredchow2338 (2024-11-25T15:24:47+08:00)
+
+## `v0.0.32` - 2024-11-25 15:10:40 +0800
+
+* [fec639f](../../commits/fec639f30d87bea60ba073a40e5298e5b32f1edc) - Release 0.0.32 - alfredchow2338 (2024-11-25T15:10:40+08:00)
+* [5161464](../../commits/51614648f1fa8edb33d96da154d5a50ef5493467) - chore: update README and repo url - alfredchow2338 (2024-11-25T15:10:24+08:00)
+
 ## `v0.0.24` - 2024-11-21 19:09:21 +0800
 
 * [9d66def](https://github.com/AlfredChow2338/releaset/commits/9d66deff9798775cf182bcda20ba597ce94b9084) - feat: add outDir options - alfredchow2338 (2024-11-21T19:09:21+08:00)
