@@ -16,7 +16,7 @@ Ensure your project uses semantic versioning for git tags.
 
 Releaset uses this command to generate logs:
 ```
-npx releaset --project @Releaset --repoUrl https://github.com/AlfredChow2338/releaset
+npx releaset --project @Releaset
 ```
 
 ![releaset example](https://github.com/AlfredChow2338/releaset/blob/main/assets/example.png?raw=true)
@@ -24,14 +24,12 @@ npx releaset --project @Releaset --repoUrl https://github.com/AlfredChow2338/rel
 Project applied pre-release practice and want to publish production logs in `CHANGELOG`:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL}
   --prTag {PR_TAG}
 ```
 
 Project applied pre-release practice and publish pre-release logs in `CHANGELOG_PR.md`:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL} \
   --prTag {PR_TAG} \
   --pr
 ```
@@ -39,14 +37,12 @@ npx releaset --project {PROJECT_NAME} \
 Export CHANGELOG which tags contain specific tag identifier:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL} \
   --filterTag {FILTER_TAG}
 ```
 
 Output CHANGELOG to specified directory eg. `.releaset/`:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL} \
   --outDir .releaset
 ```
 

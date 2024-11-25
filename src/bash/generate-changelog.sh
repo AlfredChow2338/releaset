@@ -3,9 +3,8 @@
 PROJECT_NAME=$1
 IS_DEV=$2
 PR_TAG=$3
-REPO_URL=$4
-FILTERED_TAG=$5
-OUT_DIR=$6
+FILTERED_TAG=$4
+OUT_DIR=$5
 
 remove_first_line() {
     local filename="$1" 
@@ -43,7 +42,10 @@ fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
 if [[ -z "$last_tag_dt" ]]; then
-    echo "# $PROJECT_NAME" > $OUTPUT_FILE
+    if [[ -z "$PROJECT_NAME" ]]; then
+        echo "" > $OUTPUT_FILE
+    else
+        echo "# $PROJECT_NAME" > $OUTPUT_FILE
     
     if [[ -z "$PR_TAG" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
@@ -64,7 +66,11 @@ else
     ORIGINAL_FILE=$OUTPUT_FILE
     OUTPUT_FILE="$OUT_DIR/CHANGELOG_TEMP.md"
     NEW_OUTPUT_FILE="$OUT_DIR/CHANGELOG_NEW.md"
-    echo "# $PROJECT_NAME" > $OUTPUT_FILE
+    
+    if [[ -z "$PROJECT_NAME" ]]; then
+        echo "" > $OUTPUT_FILE
+    else
+        echo "# $PROJECT_NAME" > $OUTPUT_FILE
 
     if [[ -z "$PR_TAG" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
@@ -111,7 +117,7 @@ for tag in $tags; do
     echo "" >> $OUTPUT_FILE
     
     # List commits
-    git log $range --no-merges --format="* [%h]($REPO_URL/commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
+    git log $range --no-merges --format="* [%h](../../commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     counter=$((counter + 1))

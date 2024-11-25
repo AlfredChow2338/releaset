@@ -12,7 +12,6 @@ program
   .option('--project <name>', 'Specify the project name')
   .option('--pr', 'Export prelease logs')
   .option('--prTag <tag>', 'Specify the pre-release tag identifier')
-  .option('--repoUrl <url>', 'Specify the repo url')
   .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
   .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
   .action((options) => {
@@ -25,10 +24,7 @@ program
     const prTagArg = options?.prTag ? `"${options.prTag}"` : `""`
     if (options?.pr) {
       console.log(`Pr Tag: ${prTagArg}`)
-    } 
-
-    const repoUrlArg = options?.repoUrl ? `"${options.repoUrl}"` : `""`
-    console.log(`Repo Url: ${repoUrlArg}`)
+    }
 
     const filterTagArg = options?.filterTag ? `"${options.filterTag}"` : `""`
     if (options?.filterTag) {
@@ -45,7 +41,7 @@ program
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${repoUrlArg} ${filterTagArg} ${outDirArg}`
+    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`
     executeCommand(command)
   });
 
