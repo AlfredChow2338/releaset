@@ -19,6 +19,8 @@ Releaset uses this command to generate logs:
 npx releaset --project @Releaset --repoUrl https://github.com/AlfredChow2338/releaset
 ```
 
+![releaset example](https://github.com/AlfredChow2338/releaset/blob/main/assets/example.png?raw=true)
+
 Project applied pre-release practice and want to publish production logs in `CHANGELOG`:
 ```
 npx releaset --project {PROJECT_NAME} \
@@ -29,22 +31,22 @@ npx releaset --project {PROJECT_NAME} \
 Project applied pre-release practice and publish pre-release logs in `CHANGELOG_PR.md`:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL}
-  --prTag {PR_TAG}
+  --repoUrl {REPO_URL} \
+  --prTag {PR_TAG} \
   --pr
 ```
 
 Export CHANGELOG which tags contain specific tag identifier:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL}
+  --repoUrl {REPO_URL} \
   --filterTag {FILTER_TAG}
 ```
 
 Output CHANGELOG to specified directory eg. `.releaset/`:
 ```
 npx releaset --project {PROJECT_NAME} \
-  --repoUrl {REPO_URL}
+  --repoUrl {REPO_URL} \
   --outDir .releaset
 ```
 
@@ -59,4 +61,4 @@ The script will create a changelog file:
 - Pre-release mode: `CHANGELOG_PR.md`
 - Production mode: `CHANGELOG.md`
 
-`info.json` will also be created to record all releaset information. <b>No change is needed.</b>
+`info.json` will also be created to record all releaset information. <b>No change is needed for this configuration file.</b>

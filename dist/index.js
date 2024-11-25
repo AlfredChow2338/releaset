@@ -30,6 +30,7 @@ commander_1.program
         console.log(`Filter tag: ${filterTagArg}`);
     }
     const outDirArg = `"${options.outDir}"`;
+    console.log(`Output directory: ${outDirArg}`);
     if ((options === null || options === void 0 ? void 0 : options.pr) && !(options === null || options === void 0 ? void 0 : options.prTag)) {
         console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag name.');
         return;

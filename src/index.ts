@@ -36,6 +36,7 @@ program
     }
 
     const outDirArg = `"${options.outDir}"`
+    console.log(`Output directory: ${outDirArg}`)
 
     if (options?.pr && !options?.prTag) {
       console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag name.')
