@@ -9,7 +9,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/bash/*.sh dist",
-    "release": "npx releaset --project AlfredChow2338/releaset --title @Releaset"
+    "release": "npx releaset --projectUrl https://github.com/AlfredChow2338/releaset --title @Releaset"
   },
   "keywords": [
     "releaset",
