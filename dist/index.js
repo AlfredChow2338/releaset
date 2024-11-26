@@ -18,21 +18,17 @@ commander_1.program
     const projectArg = (options === null || options === void 0 ? void 0 : options.project) ? `"${options.project}"` : `""`;
     console.log(`Project name: ${projectArg}`);
     const titleArg = (options === null || options === void 0 ? void 0 : options.title) ? `"${options.title}"` : `""`;
-    console.log(`Title: ${projectArg}`);
+    console.log(`Title: ${titleArg}`);
     const prArg = (options === null || options === void 0 ? void 0 : options.pr) ? `"true"` : `"false"`;
     console.log(`Export pre-release logs? ${prArg}`);
     const prTagArg = (options === null || options === void 0 ? void 0 : options.prTag) ? `"${options.prTag}"` : `""`;
-    if (options === null || options === void 0 ? void 0 : options.pr) {
-        console.log(`Pr Tag: ${prTagArg}`);
-    }
+    console.log(`Is pre-release mode: ${(options === null || options === void 0 ? void 0 : options.prTag) ? "true" : "false"}`);
     const filterTagArg = (options === null || options === void 0 ? void 0 : options.filterTag) ? `"${options.filterTag}"` : `""`;
-    if (options === null || options === void 0 ? void 0 : options.filterTag) {
-        console.log(`Filter tag: ${filterTagArg}`);
-    }
+    console.log(`Filter tag: ${(options === null || options === void 0 ? void 0 : options.filterTag) ? filterTagArg : "-"}`);
     const outDirArg = `"${options.outDir}"`;
     console.log(`Output directory: ${outDirArg}`);
     if ((options === null || options === void 0 ? void 0 : options.pr) && !(options === null || options === void 0 ? void 0 : options.prTag)) {
-        console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag name.');
+        console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag.');
         return;
     }
     (0, utils_1.executeCommand)(`chmod +x ${scriptPath}`);
