@@ -16,20 +16,22 @@ Ensure your project uses semantic versioning for git tags.
 
 Releaset uses this command to generate logs:
 ```
-npx releaset --project @Releaset
+npx releaset --project AlfredChow2338/releaset --title @Releaset
 ```
 
 ![releaset example](https://github.com/AlfredChow2338/releaset/blob/main/assets/example.png?raw=true)
 
-Project applied pre-release practice and want to publish production logs in `CHANGELOG`:
+Project applied pre-release practice and want to publish production logs in `CHANGELOG.md`:
 ```
 npx releaset --project {PROJECT_NAME} \
+  --title {LOG_FILE_TITLE}
   --prTag {PR_TAG}
 ```
 
 Project applied pre-release practice and publish pre-release logs in `CHANGELOG_PR.md`:
 ```
 npx releaset --project {PROJECT_NAME} \
+  --title {LOG_FILE_TITLE}
   --prTag {PR_TAG} \
   --pr
 ```
@@ -37,18 +39,20 @@ npx releaset --project {PROJECT_NAME} \
 Export CHANGELOG which tags contain specific tag identifier:
 ```
 npx releaset --project {PROJECT_NAME} \
+  --title {LOG_FILE_TITLE}
   --filterTag {FILTER_TAG}
 ```
 
 Output CHANGELOG to specified directory eg. `.releaset/`:
 ```
 npx releaset --project {PROJECT_NAME} \
+  --title {LOG_FILE_TITLE}
   --outDir .releaset
 ```
 
 ## Installation
 
-No installation is needed. We suggest use the `npx releaset` command for ease. 
+No installation is needed. We suggest directly use the `npx releaset` command for ease. 
 
 ## Pre-release version
 
@@ -57,4 +61,4 @@ The script will create a changelog file:
 - Pre-release mode: `CHANGELOG_PR.md`
 - Production mode: `CHANGELOG.md`
 
-`info.json` will also be created to record all releaset information. <b>No change is needed for this configuration file.</b>
+`releaset-info.json` will also be created to record all releaset information. <b>No change is needed for this configuration file.</b>

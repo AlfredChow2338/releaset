@@ -8,7 +8,8 @@ const scriptPath = (0, path_1.resolve)(__dirname, './bash/generate-changelog.sh'
 commander_1.program
     .version('1.0.0')
     .description('Receiving arguements')
-    .option('--project <name>', 'Specify the project name')
+    .option('--project <project>', 'Specify the project identifier on SCM platform')
+    .option('--title <title>', 'Specify the project title')
     .option('--pr', 'Export prelease logs')
     .option('--prTag <tag>', 'Specify the pre-release tag identifier')
     .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
@@ -16,6 +17,8 @@ commander_1.program
     .action((options) => {
     const projectArg = (options === null || options === void 0 ? void 0 : options.project) ? `"${options.project}"` : `""`;
     console.log(`Project name: ${projectArg}`);
+    const titleArg = (options === null || options === void 0 ? void 0 : options.title) ? `"${options.title}"` : `""`;
+    console.log(`Title: ${projectArg}`);
     const prArg = (options === null || options === void 0 ? void 0 : options.pr) ? `"true"` : `"false"`;
     console.log(`Export pre-release logs? ${prArg}`);
     const prTagArg = (options === null || options === void 0 ? void 0 : options.prTag) ? `"${options.prTag}"` : `""`;
@@ -33,7 +36,7 @@ commander_1.program
         return;
     }
     (0, utils_1.executeCommand)(`chmod +x ${scriptPath}`);
-    const command = `bash "${scriptPath}" ${projectArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`;
+    const command = `bash "${scriptPath}" ${projectArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`;
     (0, utils_1.executeCommand)(command);
 });
 commander_1.program.parse(process.argv);

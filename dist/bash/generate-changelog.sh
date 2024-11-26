@@ -1,10 +1,11 @@
 #!/bin/bash
 
 PROJECT_NAME=$1
-IS_DEV=$2
-PR_TAG=$3
-FILTERED_TAG=$4
-OUT_DIR=$5
+TITLE=$2
+IS_DEV=$3
+PR_TAG=$4
+FILTERED_TAG=$5
+OUT_DIR=$6
 
 remove_first_line() {
     local filename="$1" 
@@ -42,10 +43,10 @@ fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
 if [[ -z "$last_tag_dt" ]]; then
-    if [[ -z "$PROJECT_NAME" ]]; then
+    if [[ -z "$TITLE" ]]; then
         echo "" > $OUTPUT_FILE
     else
-        echo "# $PROJECT_NAME" > $OUTPUT_FILE
+        echo "# $TITLE" > $OUTPUT_FILE
     fi
     
     if [[ -z "$PR_TAG" ]]; then
@@ -68,10 +69,10 @@ else
     OUTPUT_FILE="$OUT_DIR/CHANGELOG_TEMP.md"
     NEW_OUTPUT_FILE="$OUT_DIR/CHANGELOG_NEW.md"
     
-    if [[ -z "$PROJECT_NAME" ]]; then
+    if [[ -z "$TITLE" ]]; then
         echo "" > $OUTPUT_FILE
     else
-        echo "# $PROJECT_NAME" > $OUTPUT_FILE
+        echo "# $TITLE" > $OUTPUT_FILE
     fi
 
     if [[ -z "$PR_TAG" ]]; then
@@ -115,11 +116,11 @@ for tag in $tags; do
     
     # Print the tag and date
     tag_date=$(git log -1 --format=%ai $tag)
-    echo "## [$tag](../../commits/$tag) - $tag_date" >> $OUTPUT_FILE
+    echo "## [$tag](/$PROJECT_NAME/commits/$tag) - $tag_date" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     # List commits
-    git log $range --no-merges --format="* [%h](../../commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
+    git log $range --no-merges --format="* [%h](/$PROJECT_NAME/commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     counter=$((counter + 1))

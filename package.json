@@ -8,7 +8,8 @@
   "description": "Simple CLI to release changelogs. CICD-friendly.",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc && copyfiles -u 1 src/bash/*.sh dist"
+    "build": "tsc && copyfiles -u 1 src/bash/*.sh dist",
+    "release": "npx releaset --project @Releaset"
   },
   "keywords": [
     "releaset",
