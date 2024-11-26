@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_NAME=$1
+PROJECT_URL=$1
 TITLE=$2
 IS_DEV=$3
 PR_TAG=$4
@@ -116,11 +116,11 @@ for tag in $tags; do
     
     # Print the tag and date
     tag_date=$(git log -1 --format=%ai $tag)
-    echo "## [$tag](/$PROJECT_NAME/commits/$tag) - $tag_date" >> $OUTPUT_FILE
+    echo "## [$tag]($PROJECT_URL/commits/$tag) - $tag_date" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     # List commits
-    git log $range --no-merges --format="* [%h](/$PROJECT_NAME/commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
+    git log $range --no-merges --format="* [%h]($PROJECT_URL/commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     counter=$((counter + 1))

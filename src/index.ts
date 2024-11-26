@@ -9,15 +9,15 @@ const scriptPath = resolve(__dirname, './bash/generate-changelog.sh');
 program
   .version('1.0.0')
   .description('Receiving arguements')
-  .option('--project <project>', 'Specify the project identifier on SCM platform')
+  .option('--projectUrl <url>', 'Specify the project url')
   .option('--title <title>', 'Specify the project title')
   .option('--pr', 'Export prelease logs')
   .option('--prTag <tag>', 'Specify the pre-release tag identifier')
   .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
   .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
   .action((options) => {
-    const projectArg = options?.project ? `"${options.project}"` : `""`;
-    console.log(`Project name: ${projectArg}`);
+    const projectUrlArg = options?.projectUrl ? `"${options.projectUrl}"` : `""`;
+    console.log(`Project url: ${projectUrlArg}`);
 
     const titleArg = options?.title ? `"${options.title}"` : `""`;
     console.log(`Title: ${titleArg}`);
@@ -34,6 +34,11 @@ program
     const outDirArg = `"${options.outDir}"`
     console.log(`Output directory: ${outDirArg}`)
 
+    if (!options?.projectUrl) {
+      console.error('Exit: Arguemnt --projectUrl is required.')
+      return
+    }
+
     if (options?.pr && !options?.prTag) {
       console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag.')
       return
@@ -41,7 +46,7 @@ program
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`
+    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`
     executeCommand(command)
   });
 
