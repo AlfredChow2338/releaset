@@ -19,6 +19,41 @@ remove_first_line() {
     fi
 }
 
+update_or_add_key() {
+    local key="$1"
+    local value="$2"
+
+    SED_INPLACE=""
+
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        SED_INPLACE="-i ''"  # macOS requires an empty extension for in-place editing
+    else
+        SED_INPLACE="-i"     # Linux
+    fi
+
+    # Ensure the file exists and is a valid JSON object
+    if [ ! -s "$INFO_FILE" ] || ! grep -q "{" "$INFO_FILE"; then
+        echo "{}" > "$INFO_FILE"
+    fi
+
+    # Check if the key exists
+    if grep -q "\"$key\": " "$INFO_FILE"; then
+        # Key exists, update it
+        # This regex ensures we don't capture more than we need by being specific with our patterns
+        sed $SED_INPLACE "s/\"$key\": \"[^\"]*\"/\"$key\": \"$value\"/" "$INFO_FILE"
+    else
+        # Key does not exist, add it
+        if grep -q "^{}$" "$INFO_FILE"; then
+            # File has only empty JSON, directly add key without comma
+            sed $SED_INPLACE "s/{}/{\"$key\": \"$value\"}/" "$INFO_FILE"
+        else
+            # File is non-empty, append key before the last closing brace
+            # This ensures that we correctly find the last closing brace even when it's not at the very end
+            sed $SED_INPLACE "s/\(.*\)}$/\1, \"$key\": \"$value\"}/" "$INFO_FILE"
+        fi
+    fi
+}
+
 INFO_FILE="$OUT_DIR/releaset-info.json"
 
 mkdir -p "$OUT_DIR"
@@ -37,8 +72,8 @@ fi
 
 # Read the last processed tag from info.json
 if [[ -f "$INFO_FILE" ]]; then
-    last_tag=$(jq -r ".$LAST_UPDATED_KEY // empty" "$INFO_FILE")
-    last_tag_dt=$(jq -r ".$LAST_UPDATED_DT_KEY // empty" "$INFO_FILE")
+    last_tag=$(awk -F '"' '/'"$LAST_UPDATED_KEY"'/ {print $4}' "$INFO_FILE")
+    last_tag_dt=$(awk -F '"' '/'"$LAST_UPDATED_DT_KEY"'/ {print $4}' "$INFO_FILE")
 fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
@@ -133,10 +168,41 @@ if [ ! -z "$latest_tag" ]; then
       echo "{}" > "$INFO_FILE"
     fi
 
-    jq --arg latest_tag "$latest_tag" --arg latest_tag_date "$latest_tag_date" \
-       --arg update_key "$LAST_UPDATED_KEY" --arg date_key "$LAST_UPDATED_DT_KEY" \
-       '.[$update_key] = $latest_tag | .[$date_key] = $latest_tag_date' \
-       "$INFO_FILE" > "$INFO_FILE.tmp" && mv "$INFO_FILE.tmp" "$INFO_FILE"
+    update_or_add_key "$LAST_UPDATED_KEY" "$latest_tag"
+    update_or_add_key "$LAST_UPDATED_DT_KEY" "$latest_tag_date"
+
+    if [ -e "$INFO_FILE''" ]; then
+        rm -rf "$INFO_FILE''"
+        echo "Removed the file: $INFO_FILE''"
+    fi
+
+    if [[ -e "$INFO_FILE" ]] && [[ $(wc -l < "$INFO_FILE") -gt 1 ]]; then
+        raw_json=$(sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g' -e 's/": \?"/": "/g' -e 's/, \?"/,"/g' "$INFO_FILE")
+        rm -f $INFO_FILE
+        echo "$raw_json" > "$INFO_FILE"
+    fi
+
+    formatted_json=$(awk 'BEGIN {
+        FS=",";
+        print "{"
+    }
+    {
+        gsub(/[{}]/, "");
+        n = split($0, a, ",");
+        for (i = 1; i <= n; i++) {
+            gsub(/^[[:space:]]+|[[:space:]]+$/, "", a[i]);
+            print "  " a[i] (i < n ? "," : "");
+        }
+    }
+    END {
+        print "}"
+    }' "$INFO_FILE")
+
+    rm -f $INFO_FILE
+    echo "$formatted_json" > "$INFO_FILE"
+
+    echo "release-info.json:"
+    cat "$INFO_FILE"
 fi
 
 if [[ $log_existed = true ]]; then
