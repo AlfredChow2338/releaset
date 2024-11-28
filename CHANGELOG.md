@@ -1,4 +1,10 @@
 # @Releaset
+## [v0.0.40](https://github.com/AlfredChow2338/releaset/commits/v0.0.40) - 2024-11-28 21:39:30 +0800
+
+* [3d2df52](https://github.com/AlfredChow2338/releaset/commits/3d2df5257749f1e14f69dda99b396508c9cc7f8e) - Release 0.0.40 - alfredchow2338 (2024-11-28T21:39:30+08:00)
+* [8218256](https://github.com/AlfredChow2338/releaset/commits/821825641c3f4b71833da6dc958577f113f1b546) - feat: replace jq with awk,sed,gsup - alfredchow2338 (2024-11-28T21:39:01+08:00)
+* [2c129f3](https://github.com/AlfredChow2338/releaset/commits/2c129f37b301acdd3676801b03c80c772089e2ab) - chore: update CHANGELOG - alfredchow2338 (2024-11-26T11:44:55+08:00)
+
 ## [v0.0.39](https://github.com/AlfredChow2338/releaset/commits/v0.0.39) - 2024-11-26 11:43:09 +0800
 
 * [9ede0b4](https://github.com/AlfredChow2338/releaset/commits/9ede0b4162b6782ef5c03f3a669031c47ca62fb5) - Release 0.0.39 - alfredchow2338 (2024-11-26T11:43:09+08:00)
