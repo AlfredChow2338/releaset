@@ -151,7 +151,7 @@ for tag in $tags; do
     
     # Print the tag and date
     tag_date=$(git log -1 --format=%ai $tag)
-    echo "## [$tag]($PROJECT_URL/commits/$tag) - $tag_date" >> $OUTPUT_FILE
+    echo "## $tag - $tag_date" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
     
     # List commits
