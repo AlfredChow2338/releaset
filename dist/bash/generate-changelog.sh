@@ -6,6 +6,10 @@ IS_DEV=$3
 PR_TAG=$4
 FILTERED_TAG=$5
 OUT_DIR=$6
+FILTER_COMMIT=$7
+
+# import files
+source "$(dirname "$0")/utils.sh"
 
 remove_first_line() {
     local filename="$1" 
@@ -19,42 +23,8 @@ remove_first_line() {
     fi
 }
 
-update_or_add_key() {
-    local key="$1"
-    local value="$2"
-
-    SED_INPLACE=""
-
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        SED_INPLACE="-i ''"  # macOS requires an empty extension for in-place editing
-    else
-        SED_INPLACE="-i"     # Linux
-    fi
-
-    # Ensure the file exists and is a valid JSON object
-    if [ ! -s "$INFO_FILE" ] || ! grep -q "{" "$INFO_FILE"; then
-        echo "{}" > "$INFO_FILE"
-    fi
-
-    # Check if the key exists
-    if grep -q "\"$key\": " "$INFO_FILE"; then
-        # Key exists, update it
-        # This regex ensures we don't capture more than we need by being specific with our patterns
-        sed $SED_INPLACE "s/\"$key\": \"[^\"]*\"/\"$key\": \"$value\"/" "$INFO_FILE"
-    else
-        # Key does not exist, add it
-        if grep -q "^{}$" "$INFO_FILE"; then
-            # File has only empty JSON, directly add key without comma
-            sed $SED_INPLACE "s/{}/{\"$key\": \"$value\"}/" "$INFO_FILE"
-        else
-            # File is non-empty, append key before the last closing brace
-            # This ensures that we correctly find the last closing brace even when it's not at the very end
-            sed $SED_INPLACE "s/\(.*\)}$/\1, \"$key\": \"$value\"}/" "$INFO_FILE"
-        fi
-    fi
-}
-
-INFO_FILE="$OUT_DIR/releaset-info.json"
+INFO_FILE=".releaset/info.json"
+PUBLISH_NOTE_FILE=".releaset/publish_note.json"
 
 mkdir -p "$OUT_DIR"
 
@@ -72,8 +42,8 @@ fi
 
 # Read the last processed tag from info.json
 if [[ -f "$INFO_FILE" ]]; then
-    last_tag=$(awk -F '"' '/'"$LAST_UPDATED_KEY"'/ {print $4}' "$INFO_FILE")
-    last_tag_dt=$(awk -F '"' '/'"$LAST_UPDATED_DT_KEY"'/ {print $4}' "$INFO_FILE")
+    last_tag=$(read_json_key "$LAST_UPDATED_KEY" "$INFO_FILE" )    
+    last_tag=$(read_json_key "$LAST_UPDATED_DT_KEY" "$INFO_FILE" )
 fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
@@ -138,8 +108,13 @@ for tag in $tags; do
         latest_tag_date=$(git log -1 --format=%cI $tag)  # Get the commit date in ISO format
     fi
     
-    # Check if there is a previous tag to set the range
     prev_tag=$(git describe --tags --abbrev=0 $tag^ 2>/dev/null)
+    publish_note=$(awk -F '[:}]' -v tag="$tag" '
+        $1 ~ tag {
+            gsub(/"|,/, "", $2);
+            print $2;
+        }
+    ' "$PUBLISH_NOTE_FILE")
     
     if [ -z "$prev_tag" ]; then
         # If there's no previous tag, list everything up to the current tag
@@ -149,13 +124,28 @@ for tag in $tags; do
         range="$prev_tag..$tag"
     fi
     
-    # Print the tag and date
     tag_date=$(git log -1 --format=%ai $tag)
     echo "## $tag - $tag_date" >> $OUTPUT_FILE
     echo "" >> $OUTPUT_FILE
-    
-    # List commits
-    git log $range --no-merges --format="* [%h]($PROJECT_URL/commits/%H) - %s - %an (%aI)" >> $OUTPUT_FILE
+
+    if [ -n "$publish_note" ]; then
+        echo "### $publish_note" >> "$OUTPUT_FILE"
+        echo "" >> "$OUTPUT_FILE"
+    fi
+
+    echo $tag
+    commit_hashes=$(git log $range --no-merges --format="%h")
+
+    for commit_hash in $commit_hashes; do
+        commit_message=$(git log -1 --format="%s" "$commit_hash")
+
+        if echo "$commit_message" | grep "$FILTER_COMMIT" > /dev/null; then
+            continue
+        else
+            git log -1 --no-merges --format="* [%h]($PROJECT_URL/commits/%H) - %s - %an (%aI)" "$commit_hash" >> $OUTPUT_FILE
+        fi
+    done
+
     echo "" >> $OUTPUT_FILE
     
     counter=$((counter + 1))
@@ -168,8 +158,8 @@ if [ ! -z "$latest_tag" ]; then
       echo "{}" > "$INFO_FILE"
     fi
 
-    update_or_add_key "$LAST_UPDATED_KEY" "$latest_tag"
-    update_or_add_key "$LAST_UPDATED_DT_KEY" "$latest_tag_date"
+    update_json_key "$LAST_UPDATED_KEY" "$latest_tag" "$INFO_FILE"
+    update_json_key "$LAST_UPDATED_DT_KEY" "$latest_tag_date" "$INFO_FILE"
 
     if [ -e "$INFO_FILE''" ]; then
         rm -rf "$INFO_FILE''"
@@ -200,9 +190,6 @@ if [ ! -z "$latest_tag" ]; then
 
     rm -f $INFO_FILE
     echo "$formatted_json" > "$INFO_FILE"
-
-    echo "release-info.json:"
-    cat "$INFO_FILE"
 fi
 
 if [[ $log_existed = true ]]; then

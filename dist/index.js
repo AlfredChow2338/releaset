@@ -14,6 +14,7 @@ commander_1.program
     .option('--prTag <tag>', 'Specify the pre-release tag identifier')
     .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
     .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
+    .option('--filterCommit <message>', 'Filter commits which contains specific words')
     .action((options) => {
     const projectUrlArg = (options === null || options === void 0 ? void 0 : options.projectUrl) ? `"${options.projectUrl}"` : `""`;
     console.log(`Project url: ${projectUrlArg}`);
@@ -27,6 +28,8 @@ commander_1.program
     console.log(`Filter tag: ${(options === null || options === void 0 ? void 0 : options.filterTag) ? filterTagArg : "-"}`);
     const outDirArg = `"${options.outDir}"`;
     console.log(`Output directory: ${outDirArg}`);
+    const filterCommitArg = `"${options.filterCommit}"`;
+    console.log(`Filter commit: ${filterCommitArg}`);
     if (!(options === null || options === void 0 ? void 0 : options.projectUrl)) {
         console.error('Exit: Arguemnt --projectUrl is required.');
         return;
@@ -36,7 +39,7 @@ commander_1.program
         return;
     }
     (0, utils_1.executeCommand)(`chmod +x ${scriptPath}`);
-    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg}`;
+    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg} ${filterCommitArg}`;
     (0, utils_1.executeCommand)(command);
 });
 commander_1.program.parse(process.argv);
