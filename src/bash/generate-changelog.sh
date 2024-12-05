@@ -49,10 +49,8 @@ if [[ -f "$INFO_FILE" ]]; then
 fi
 
 # Update publish_note.json
-if [[ -f "$PUBLISH_NOTE_FILE" ]]; then
-    if [[ ! -z "$PUBLISH_NOTE" && ! -z "$VERSION" ]]; then
-        update_json_key "$VERSION" "$PUBLISH_NOTE" "$PUBLISH_NOTE_FILE"
-    fi
+if [[ ! -z "$PUBLISH_NOTE" && ! -z "$VERSION" ]]; then
+    update_json_key "$VERSION" "$PUBLISH_NOTE" "$PUBLISH_NOTE_FILE"
 fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
