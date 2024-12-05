@@ -133,7 +133,6 @@ for tag in $tags; do
         echo "" >> "$OUTPUT_FILE"
     fi
 
-    echo $tag
     commit_hashes=$(git log $range --no-merges --format="%h")
 
     for commit_hash in $commit_hashes; do

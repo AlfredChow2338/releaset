@@ -1,4 +1,13 @@
 # @Releaset
+## v0.1.0 - 2024-12-05 10:50:20 +0800
+
+###  Remove tag url; Adopt publish note; Add option to filter commit
+
+* [d0afe06](https://github.com/AlfredChow2338/releaset/commits/d0afe066b27eca352b3e8294c37a75b66b73b25c) - feat: remove tag url; adopt publish note; add filter commit option - alfredchow2338 (2024-12-05T10:50:20+08:00)
+* [9ec147f](https://github.com/AlfredChow2338/releaset/commits/9ec147f7222cb60c93aa864f0fc41cc5e8ac5f37) - feat: remove icon clickable url - alfredchow2338 (2024-12-02T19:40:44+08:00)
+* [d609c9e](https://github.com/AlfredChow2338/releaset/commits/d609c9e62d8fa648f4a9b10c1082f51ecb04f5e3) - chore: remove unused types.d.ts - alfredchow2338 (2024-12-02T19:38:22+08:00)
+* [7baddff](https://github.com/AlfredChow2338/releaset/commits/7baddff87e7d1e84c30e4650d56fd499f4d3e48a) - chore: update CHANGELOG - alfredchow2338 (2024-11-28T21:40:58+08:00)
+
 ## v0.0.40 - 2024-11-28 21:39:30 +0800
 
 ###  Replace jq command with awksedgsup
