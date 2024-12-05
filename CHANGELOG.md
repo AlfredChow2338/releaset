@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.3 - 2024-12-05 18:55:14 +0800
+
+###  Fix .releaset dir not exist
+
+* [921bb49](https://github.com/AlfredChow2338/releaset/commits/921bb49233ff5a1c5d7797ee8db410bd03ab195e) - fix: make sure .releaset dir exist - alfredchow2338 (2024-12-05T18:55:14+08:00)
+
 ## v0.1.2 - 2024-12-05 18:22:14 +0800
 
 ###  Fix update publish note init
