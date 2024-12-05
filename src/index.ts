@@ -15,8 +15,35 @@ program
   .option('--prTag <tag>', 'Specify the pre-release tag identifier')
   .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
   .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
-  .option('--filterCommit <message>', 'Filter commits which contains specific words')
+  .option('--filterCommit <message>', 'Filter commits which contains specific words', '')
+  .option('--note <note>', 'Specify publish note', '')
+  .option('--ver <ver>', 'Specify version to publish', '')
   .action((options) => {
+    if (!options?.projectUrl) {
+      console.error('Exit: Arguemnt --projectUrl is required.')
+      return
+    }
+
+    if (options?.pr && !options?.prTag) {
+      console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag.')
+      return
+    }
+
+    if (!options?.note && options?.ver) {
+      console.error('Exit: Arguemnts --note is required.')
+      return
+    }
+
+    if (options?.note && !options?.ver) {
+      console.error('Exit: Arguemnts --version is required.')
+      return
+    }
+
+    if (String(options?.note).includes(',')) {
+      console.error(`Exit: Arguement --note does not allow ','.`)
+      return
+    }
+
     const projectUrlArg = options?.projectUrl ? `"${options.projectUrl}"` : `""`;
     console.log(`Project url: ${projectUrlArg}`);
 
@@ -38,19 +65,16 @@ program
     const filterCommitArg = `"${options.filterCommit}"`
     console.log(`Filter commit: ${filterCommitArg}`)
 
-    if (!options?.projectUrl) {
-      console.error('Exit: Arguemnt --projectUrl is required.')
-      return
-    }
-
-    if (options?.pr && !options?.prTag) {
-      console.error('Exit: Arguemnt --prTag is required to identifed pre-release tag.')
-      return
+    const noteArg = `"${options.note}"`
+    const versionArg = `"${options.ver}"`
+    if (options?.note && options?.ver) {
+      console.log(`Publish note: ${noteArg}`)
+      console.log(`Publish version: ${versionArg}`)
     }
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg} ${filterCommitArg}`
+    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg} ${filterCommitArg} ${noteArg} ${versionArg}`
     executeCommand(command)
   });
 

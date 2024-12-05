@@ -7,6 +7,8 @@ PR_TAG=$4
 FILTERED_TAG=$5
 OUT_DIR=$6
 FILTER_COMMIT=$7
+PUBLISH_NOTE=$8
+VERSION=$9
 
 # import files
 source "$(dirname "$0")/utils.sh"
@@ -44,6 +46,13 @@ fi
 if [[ -f "$INFO_FILE" ]]; then
     last_tag=$(read_json_key "$LAST_UPDATED_KEY" "$INFO_FILE" )    
     last_tag=$(read_json_key "$LAST_UPDATED_DT_KEY" "$INFO_FILE" )
+fi
+
+# Update publish_note.json
+if [[ -f "$PUBLISH_NOTE_FILE" ]]; then
+    if [[ ! -z "$PUBLISH_NOTE" && ! -z "$VERSION" ]]; then
+        update_json_key "$VERSION" "$PUBLISH_NOTE" "$PUBLISH_NOTE_FILE"
+    fi
 fi
 
 # Fetch tags, considering the last processed tag to filter out older tags
@@ -152,43 +161,8 @@ for tag in $tags; do
 done
 
 if [ ! -z "$latest_tag" ]; then
-    
-    if [[ ! -f "$INFO_FILE" ]]; then
-      echo "{}" > "$INFO_FILE"
-    fi
-
     update_json_key "$LAST_UPDATED_KEY" "$latest_tag" "$INFO_FILE"
     update_json_key "$LAST_UPDATED_DT_KEY" "$latest_tag_date" "$INFO_FILE"
-
-    if [ -e "$INFO_FILE''" ]; then
-        rm -rf "$INFO_FILE''"
-        echo "Removed the file: $INFO_FILE''"
-    fi
-
-    if [[ -e "$INFO_FILE" ]] && [[ $(wc -l < "$INFO_FILE") -gt 1 ]]; then
-        raw_json=$(sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g' -e 's/": \?"/": "/g' -e 's/, \?"/,"/g' "$INFO_FILE")
-        rm -f $INFO_FILE
-        echo "$raw_json" > "$INFO_FILE"
-    fi
-
-    formatted_json=$(awk 'BEGIN {
-        FS=",";
-        print "{"
-    }
-    {
-        gsub(/[{}]/, "");
-        n = split($0, a, ",");
-        for (i = 1; i <= n; i++) {
-            gsub(/^[[:space:]]+|[[:space:]]+$/, "", a[i]);
-            print "  " a[i] (i < n ? "," : "");
-        }
-    }
-    END {
-        print "}"
-    }' "$INFO_FILE")
-
-    rm -f $INFO_FILE
-    echo "$formatted_json" > "$INFO_FILE"
 fi
 
 if [[ $log_existed = true ]]; then

@@ -34,6 +34,10 @@ update_json_key() {
     local value="$2"
     local filename="$3"
 
+    if [[ ! -f "$filename" ]]; then
+      echo "{}" > "$filename"
+    fi
+
     SED_INPLACE=""
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -62,5 +66,61 @@ update_json_key() {
             # This ensures that we correctly find the last closing brace even when it's not at the very end
             sed $SED_INPLACE "s/\(.*\)}$/\1, \"$key\": \"$value\"}/" "$filename"
         fi
+    fi
+
+    if [ -e "$filename''" ]; then
+        rm -f "$filename''"
+    fi
+
+    if [[ -e "$filename" ]] && [[ $(wc -l < "$filename") -gt 1 ]]; then
+        raw_json=$(sed -e ':a' -e 'N' -e '$!ba' -e 's/\n//g' -e 's/": \?"/": "/g' -e 's/, \?"/,"/g' "$filename")
+        rm -f $filename
+        echo "$raw_json" > "$filename"
+    fi
+
+    formatted_json=$(awk 'BEGIN {
+        FS=",";
+        print "{"
+    }
+    {
+        gsub(/[{}]/, "");
+        n = split($0, a, ",");
+        for (i = 1; i <= n; i++) {
+            gsub(/^[[:space:]]+|[[:space:]]+$/, "", a[i]);
+            print "  " a[i] (i < n ? "," : "");
+        }
+    }
+    END {
+        print "}"
+    }' "$filename")
+
+    rm -f $filename
+    echo "$formatted_json" > "$filename"
+}
+
+update_publish_note() {
+    local ver="$1"
+    local note="$2"
+    local json_file="$3"
+
+    if [[ ! -f "$json_file" ]]; then
+        echo "Error: $json_file not found."
+        return 1
+    fi
+
+    # Read the last two lines of the JSON file
+    last_line=$(tail -n 1 "$json_file")
+    second_last_line=$(tail -n 2 "$json_file" | head -n 1)
+
+    # Prepare the new line to append
+    new_line="$ver: $note"
+
+    if [[ -z "$second_last_line" ]]; then
+    # If the second last line is empty, append the new line directly
+    sed -i '$s/$/'"$new_line"'/' "$json_file"
+    else
+    # If the second last line is not empty, append a comma and the new line
+    sed -i '$s/$/,/' "$json_file"
+    echo "$new_line" >> "$json_file"
     fi
 }
