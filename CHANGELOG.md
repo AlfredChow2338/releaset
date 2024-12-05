@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.2 - 2024-12-05 18:22:14 +0800
+
+###  Fix update publish note init
+
+* [e941616](https://github.com/AlfredChow2338/releaset/commits/e94161689b8a95514208e46b45b6c5291c6e163b) - fix: update publish_note.json init - alfredchow2338 (2024-12-05T18:22:14+08:00)
+
 ## v0.1.1 - 2024-12-05 17:30:12 +0800
 
 ###  Add note and version options

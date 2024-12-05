@@ -27,5 +27,6 @@
   "v0.0.39": "Refactor project url options usage",
   "v0.0.40": "Replace jq command with awk & sed & gsup",
   "v0.1.0": "Remove tag url; Adopt publish note; Add option to filter commit",
-  "v0.1.1": "Add note and version options"
+  "v0.1.1": "Add note and version options",
+  "v0.1.2": "Fix update publish note init"
 }
