@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.1 - 2024-12-05 17:30:12 +0800
+
+###  Add note and version options
+
+* [06b2c9a](https://github.com/AlfredChow2338/releaset/commits/06b2c9a1c4d38661cf020093c85558ef289a1936) - feat: add note and ver options - alfredchow2338 (2024-12-05T17:30:12+08:00)
+
 ## v0.1.0 - 2024-12-05 10:50:20 +0800
 
 ###  Remove tag url; Adopt publish note; Add option to filter commit
@@ -10,7 +16,7 @@
 
 ## v0.0.40 - 2024-11-28 21:39:30 +0800
 
-###  Replace jq command with awksedgsup
+###  Replace jq command with awk & sed & gsup
 
 * [8218256](https://github.com/AlfredChow2338/releaset/commits/821825641c3f4b71833da6dc958577f113f1b546) - feat: replace jq with awk,sed,gsup - alfredchow2338 (2024-11-28T21:39:01+08:00)
 * [2c129f3](https://github.com/AlfredChow2338/releaset/commits/2c129f37b301acdd3676801b03c80c772089e2ab) - chore: update CHANGELOG - alfredchow2338 (2024-11-26T11:44:55+08:00)
