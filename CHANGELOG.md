@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.4 - 2024-12-05 20:49:28 +0800
+
+###  Update README
+
+* [cb794ef](https://github.com/AlfredChow2338/releaset/commits/cb794efeb41dc3dafbaf82ce52e7fdb9d436cae0) - chore: update README - alfredchow2338 (2024-12-05T20:49:28+08:00)
+
 ## v0.1.3 - 2024-12-05 18:55:14 +0800
 
 ###  Fix .releaset dir not exist
