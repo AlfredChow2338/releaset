@@ -28,6 +28,7 @@ remove_first_line() {
 INFO_FILE=".releaset/info.json"
 PUBLISH_NOTE_FILE=".releaset/publish_note.json"
 
+mkdir -p ".releaset"
 mkdir -p "$OUT_DIR"
 
 if $IS_DEV; then
