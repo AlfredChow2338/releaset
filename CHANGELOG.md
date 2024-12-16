@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.5 - 2024-12-16 17:28:54 +0800
+
+###  Enhancement issue #2 support .releaset mono repo
+
+* [0db48fc](https://github.com/AlfredChow2338/releaset/commits/0db48fc8470e7fb1fde21b06c05146eaa84c52ad) - feat: issue #2 enhancement for mono repo support - alfredchow2338 (2024-12-16T17:28:54+08:00)
+
 ## v0.1.4 - 2024-12-05 20:49:28 +0800
 
 ###  Update README
