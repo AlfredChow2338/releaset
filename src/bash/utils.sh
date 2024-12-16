@@ -1,5 +1,17 @@
 #!/bin/bash
 
+remove_first_line() {
+    local filename="$1" 
+    if [ -f "$filename" ]; then
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            sed -i '' '1d' "$filename"
+        else
+            # Linux system
+            sed -i '1d' "$filename"
+        fi
+    fi
+}
+
 read_file_by_key() {
     local key="$1"
     local filename="$2"

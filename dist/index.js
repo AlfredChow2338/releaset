@@ -27,11 +27,11 @@ commander_1.program
         return;
     }
     if (!(options === null || options === void 0 ? void 0 : options.note) && (options === null || options === void 0 ? void 0 : options.ver)) {
-        console.error('Exit: Arguemnts --note is required.');
+        console.error('Exit: Arguemnts --note is required to apply publish note.');
         return;
     }
     if ((options === null || options === void 0 ? void 0 : options.note) && !(options === null || options === void 0 ? void 0 : options.ver)) {
-        console.error('Exit: Arguemnts --version is required.');
+        console.error('Exit: Arguemnts --ver is required to define version.');
         return;
     }
     if (String(options === null || options === void 0 ? void 0 : options.note).includes(',')) {

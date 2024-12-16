@@ -13,22 +13,10 @@ VERSION=$9
 # import files
 source "$(dirname "$0")/utils.sh"
 
-remove_first_line() {
-    local filename="$1" 
-    if [ -f "$filename" ]; then
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            sed -i '' '1d' "$filename"
-        else
-            # Linux system
-            sed -i '1d' "$filename"
-        fi
-    fi
-}
+INFO_FILE="$OUT_DIR/.releaset/info.json"
+PUBLISH_NOTE_FILE="$OUT_DIR/.releaset/publish_note.json"
 
-INFO_FILE=".releaset/info.json"
-PUBLISH_NOTE_FILE=".releaset/publish_note.json"
-
-mkdir -p ".releaset"
+mkdir -p "$OUT_DIR/.releaset"
 mkdir -p "$OUT_DIR"
 
 if $IS_DEV; then
