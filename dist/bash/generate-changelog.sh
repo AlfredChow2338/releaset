@@ -105,12 +105,17 @@ for tag in $tags; do
     fi
     
     prev_tag=$(git describe --tags --abbrev=0 $tag^ 2>/dev/null)
-    publish_note=$(awk -F '[:}]' -v tag="$tag" '
-        $1 ~ tag {
-            gsub(/"|,/, "", $2);
-            print $2;
-        }
-    ' "$PUBLISH_NOTE_FILE")
+    
+    if [ -f "$PUBLISH_NOTE_FILE" ]; then
+        publish_note=$(awk -F '[:}]' -v tag="$tag" '
+            $1 ~ tag {
+                gsub(/"|,/, "", $2);
+                print $2;
+            }
+        ' "$PUBLISH_NOTE_FILE")
+    else
+        publish_note=""
+    fi
     
     if [ -z "$prev_tag" ]; then
         # If there's no previous tag, list everything up to the current tag
