@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.6 - 2025-05-21 20:26:05 +0800
+
+###  Fix issue #3  publish_note.json
+
+* [5e3d4a9](https://github.com/AlfredChow2338/releaset/commits/5e3d4a947c773c5ad1a8ddfa66fe5f3e7ec522fb) - fix: issue #3 publish_note.json: No such file or directory - alfredchow2338 (2025-05-21T20:26:05+08:00)
+
 ## v0.1.5 - 2024-12-16 17:28:54 +0800
 
 ###  Enhancement issue #2 support .releaset mono repo
