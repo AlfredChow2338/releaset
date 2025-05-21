@@ -139,10 +139,10 @@ for tag in $tags; do
     for commit_hash in $commit_hashes; do
         commit_message=$(git log -1 --format="%s" "$commit_hash")
 
-        if echo "$commit_message" | grep "$FILTER_COMMIT" > /dev/null; then
-            continue
-        else
+        if [ -z "$FILTER_COMMIT" ] || ! echo "$commit_message" | grep "$FILTER_COMMIT" > /dev/null; then
             git log -1 --no-merges --format="* [%h]($PROJECT_URL/commits/%H) - %s - %an (%aI)" "$commit_hash" >> $OUTPUT_FILE
+        else
+            continue
         fi
     done
 
