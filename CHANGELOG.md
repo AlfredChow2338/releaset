@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.7 - 2025-05-21 21:01:30 +0800
+
+###  Add HOW_TO_RELEASE.md
+
+* [54ee16a](https://github.com/AlfredChow2338/releaset/commits/54ee16a09ee6b42809b3ba286970f732091f3758) - chore: add HOW_TO_RELEASE.md - alfredchow2338 (2025-05-21T21:01:30+08:00)
+
 ## v0.1.6 - 2025-05-21 20:26:05 +0800
 
 ###  Fix issue #3  publish_note.json
