@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.8 - 2025-05-21 22:02:51 +0800
+
+###  Fix filter commit logic
+
+* [12e6dcc](https://github.com/AlfredChow2338/releaset/commits/12e6dccd865da837692fc5b9ad58bfd56e93e9e0) - fix: logs missing without filterCommit - alfredchow2338 (2025-05-21T22:02:51+08:00)
+
 ## v0.1.7 - 2025-05-21 21:01:30 +0800
 
 ###  Add HOW_TO_RELEASE.md
@@ -7,7 +13,7 @@
 
 ## v0.1.6 - 2025-05-21 20:26:05 +0800
 
-###  Fix issue #3  publish_note.json
+###  Fix issue #3 publish_note.json - No such file or directory
 
 * [5e3d4a9](https://github.com/AlfredChow2338/releaset/commits/5e3d4a947c773c5ad1a8ddfa66fe5f3e7ec522fb) - fix: issue #3 publish_note.json: No such file or directory - alfredchow2338 (2025-05-21T20:26:05+08:00)
 
