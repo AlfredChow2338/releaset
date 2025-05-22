@@ -1,4 +1,10 @@
 # @Releaset
+## v0.1.9 - 2025-05-22 12:17:34 +0800
+
+###  Support multiple filter tags
+
+* [4e19f90](https://github.com/AlfredChow2338/releaset/commits/4e19f90319271f58498c4b50a0fca37ac6146cfa) - feat: support multiple filter tags - alfredchow2338 (2025-05-22T12:17:34+08:00)
+
 ## v0.1.8 - 2025-05-21 22:02:51 +0800
 
 ###  Fix filter commit logic

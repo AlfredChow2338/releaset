@@ -1,6 +1,6 @@
 {
   "name": "releaset",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "repository": "AlfredChow2338/releaset",
   "bin": {
     "releaset": "./dist/index.js"
@@ -10,7 +10,8 @@
   "scripts": {
     "build": "tsc && copyfiles -u 1 src/bash/*.sh dist",
     "tag": "git tag -a v$(jq -r .version package.json) -m v$(jq -r .version package.json)",
-    "release": "npx releaset --projectUrl https://github.com/AlfredChow2338/releaset --title @Releaset --filterCommit Release"
+    "release": "npx releaset --projectUrl https://github.com/AlfredChow2338/releaset --title @Releaset --filterCommit Release",
+    "postrelease": "git commit -am \"Release $(jq -r .version package.json)\""
   },
   "keywords": [
     "releaset",
