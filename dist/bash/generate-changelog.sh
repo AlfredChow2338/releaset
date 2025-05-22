@@ -54,7 +54,7 @@ else
 fi
 
 if [ -n "$PR_TAG" ]; then
-    tags=$(echo "$tags" | tr ' ' '\n' | grep "${FILTER_PR_FLAG:-}$PR_TAG" | tr '\n' ' ')
+    tags=$(echo "$tags" | tr ' ' '\n' | grep "$FILTER_PR_FLAG$PR_TAG" | tr '\n' ' ')
 fi
 
 if [ -n "$FILTERED_TAG" ]; then
