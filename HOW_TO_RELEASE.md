@@ -8,7 +8,4 @@
 1. Update version in `package.json`
 2. Run `pnpm tag` to append the latest tag to the commit
 3. Update `publish_note.json` to describe eg. `"v1.0.0": "The very first stable version"`
-4. Run `pnpm release` to update `CHANGELOG.md`
-5. Run `npm publish` to publish to NPM
-6. Commit the changes. Commit message must start with Release, eg. `Release: 1.0.0`
-7. Push the changes to remote
+4. Run `pnpm release`

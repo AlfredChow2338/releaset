@@ -1,4 +1,10 @@
 # @Releaset
+## v0.2.2 - 2025-05-22 16:32:31 +0800
+
+###  Fix grep invalid option II
+
+* [e0db26a](https://github.com/AlfredChow2338/releaset/commits/e0db26a84b89183fe529cc7e49320d4c715dec88) - fix: grep invalid option II - alfredchow2338 (2025-05-22T16:32:31+08:00)
+
 ## v0.2.1 - 2025-05-22 16:05:10 +0800
 
 ###  Fix grep invalid option

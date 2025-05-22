@@ -37,5 +37,6 @@
   "v0.1.8": "Fix filter commit logic",
   "v0.1.9": "Support multiple filter tags",
   "v0.2.0": "Support filter out tags",
-  "v0.2.1": "Fix grep invalid option"
+  "v0.2.1": "Fix grep invalid option",
+  "v0.2.2": "Fix grep invalid option II"
 }
