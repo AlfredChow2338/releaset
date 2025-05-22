@@ -1,4 +1,10 @@
 # @Releaset
+## v0.2.0 - 2025-05-22 15:40:09 +0800
+
+###  Support filter out tags
+
+* [64952c4](https://github.com/AlfredChow2338/releaset/commits/64952c45e9462b6db6f5c6e648ebca6eff1d036e) - feat: add filter out tags and rewrite tagging filter logic - alfredchow2338 (2025-05-22T15:40:09+08:00)
+
 ## v0.1.9 - 2025-05-22 12:17:34 +0800
 
 ###  Support multiple filter tags
