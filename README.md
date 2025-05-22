@@ -43,8 +43,9 @@ npx releaset --projectUrl {PROJECT_URL} \
   --title {LOG_FILE_TITLE}
   --filterTag {FILTER_TAG}
 ```
+Note: version >= 0.1.9 `filterTag` can be more than one, which has to be separate by commas (eg. tag1,tag2,tag3)
 
-Output CHANGELOG to specified directory eg. `packages/foo`:
+Output logs to specified directory eg. `packages/foo`:
 ```
 npx releaset --projectUrl {PROJECT_URL} \
   --title {LOG_FILE_TITLE}

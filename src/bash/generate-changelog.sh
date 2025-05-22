@@ -5,6 +5,7 @@ TITLE=$2
 IS_DEV=$3
 PR_TAG=$4
 FILTERED_TAG=$5
+
 OUT_DIR=$6
 FILTER_COMMIT=$7
 PUBLISH_NOTE=$8
@@ -54,13 +55,13 @@ if [[ -z "$last_tag_dt" ]]; then
         if [[ -z "$FILTERED_TAG" ]]; then
             tags=$(git tag --list --sort=-creatordate)
         else
-            tags=$(git tag --list --sort=-creatordate | grep $FILTERED_TAG)
+            tags=$(git tag --list --sort=-creatordate | grep -E "$(echo "$FILTERED_TAG" | sed 's/,/|/g')")
         fi    
     else
         if [[ -z "$FILTERED_TAG" ]]; then
             tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG)
         else
-            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG | grep $FILTERED_TAG)
+            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG | grep -E "$(echo "$FILTERED_TAG" | sed 's/,/|/g')")
         fi
     fi
     

@@ -48,6 +48,10 @@ commander_1.program
     console.log(`Is pre-release mode: ${(options === null || options === void 0 ? void 0 : options.prTag) ? "true" : "false"}`);
     const filterTagArg = (options === null || options === void 0 ? void 0 : options.filterTag) ? `"${options.filterTag}"` : `""`;
     console.log(`Filter tag: ${(options === null || options === void 0 ? void 0 : options.filterTag) ? filterTagArg : "-"}`);
+    const filterOutTagArg = (options === null || options === void 0 ? void 0 : options.filterOutTag) ? `"${options.filterOutTag}"` : `""`;
+    if (options === null || options === void 0 ? void 0 : options.filterOutTag) {
+        console.log(`Filter out tag: ${options.filterOutTag}`);
+    }
     const outDirArg = `"${options.outDir}"`;
     console.log(`Output directory: ${outDirArg}`);
     const filterCommitArg = `"${options.filterCommit}"`;

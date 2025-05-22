@@ -59,6 +59,11 @@ program
     const filterTagArg = options?.filterTag ? `"${options.filterTag}"` : `""`
     console.log(`Filter tag: ${options?.filterTag ? filterTagArg : "-"}`)
 
+    const filterOutTagArg = options?.filterOutTag ? `"${options.filterOutTag}"` : `""`
+    if (options?.filterOutTag) {
+      console.log(`Filter out tag: ${options.filterOutTag}`)
+    }
+
     const outDirArg = `"${options.outDir}"`
     console.log(`Output directory: ${outDirArg}`)
 
