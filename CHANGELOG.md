@@ -1,4 +1,10 @@
 # @Releaset
+## v0.2.1 - 2025-05-22 16:05:10 +0800
+
+###  Fix grep invalid option
+
+* [8cf17d0](https://github.com/AlfredChow2338/releaset/commits/8cf17d059f3ecf3929a2e4bee77aa3eddbfd2624) - fix: grep invalid option filter pr mode - alfredchow2338 (2025-05-22T16:05:10+08:00)
+
 ## v0.2.0 - 2025-05-22 15:40:09 +0800
 
 ###  Support filter out tags
