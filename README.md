@@ -37,13 +37,21 @@ npx releaset --projectUrl {PROJECT_URL} \
   --pr
 ```
 
-Export CHANGELOG which tags contain specific tag identifier:
+Include tags that contain specific keywords:
 ```
 npx releaset --projectUrl {PROJECT_URL} \
   --title {LOG_FILE_TITLE}
   --filterTag {FILTER_TAG}
 ```
-Note: version >= 0.1.9 `filterTag` can be more than one, which has to be separate by commas (eg. tag1,tag2,tag3)
+Note: Support version >= 0.1.9 `filterTag` can be more than one, which has to be separate by commas (eg. tag1,tag2,tag3)
+
+Exclude tags that contain specific keywords:
+```
+npx releaset --projectUrl {PROJECT_URL} \
+  --title {LOG_FILE_TITLE}
+  --filterOutTag {FILTER_TAG}
+```
+Note: Support in version >= 0.2.0 `filterOutTag` can be more than one, which has to be separate by commas (eg. tag1,tag2,tag3)
 
 Output logs to specified directory eg. `packages/foo`:
 ```

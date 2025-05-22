@@ -5,11 +5,11 @@ TITLE=$2
 IS_DEV=$3
 PR_TAG=$4
 FILTERED_TAG=$5
-
-OUT_DIR=$6
-FILTER_COMMIT=$7
-PUBLISH_NOTE=$8
-VERSION=$9
+FILTER_OUT_TAG=$6
+OUT_DIR=$7
+FILTER_COMMIT=$8
+PUBLISH_NOTE=$9
+VERSION=$10
 
 # import files
 source "$(dirname "$0")/utils.sh"
@@ -24,12 +24,12 @@ if $IS_DEV; then
     OUTPUT_FILE="$OUT_DIR/CHANGELOG_PR.md"
     LAST_UPDATED_KEY="last_pr_update_tag"
     LAST_UPDATED_DT_KEY="last_pr_update_tag_dt"
-    FILTER_FLAG=""
+    FILTER_PR_FLAG=""
 else
     OUTPUT_FILE="$OUT_DIR/CHANGELOG.md"
     LAST_UPDATED_KEY="last_update_tag"
     LAST_UPDATED_DT_KEY="last_update_tag_dt"
-    FILTER_FLAG="-v "
+    FILTER_PR_FLAG="-v "
 fi
 
 # Read the last processed tag from info.json
@@ -43,58 +43,35 @@ if [[ ! -z "$PUBLISH_NOTE" && ! -z "$VERSION" ]]; then
     update_json_key "$VERSION" "$PUBLISH_NOTE" "$PUBLISH_NOTE_FILE"
 fi
 
-# Fetch tags, considering the last processed tag to filter out older tags
 if [[ -z "$last_tag_dt" ]]; then
-    if [[ -z "$TITLE" ]]; then
-        echo "" > $OUTPUT_FILE
-    else
-        echo "# $TITLE" > $OUTPUT_FILE
-    fi
-    
-    if [[ -z "$PR_TAG" ]]; then
-        if [[ -z "$FILTERED_TAG" ]]; then
-            tags=$(git tag --list --sort=-creatordate)
-        else
-            tags=$(git tag --list --sort=-creatordate | grep -E "$(echo "$FILTERED_TAG" | sed 's/,/|/g')")
-        fi    
-    else
-        if [[ -z "$FILTERED_TAG" ]]; then
-            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG)
-        else
-            tags=$(git tag --list --sort=-creatordate | grep $FILTER_FLAG$PR_TAG | grep -E "$(echo "$FILTERED_TAG" | sed 's/,/|/g')")
-        fi
-    fi
-    
+    tags=$(git tag --sort=-creatordate 2>/dev/null)
 else
     log_existed=true
     ORIGINAL_FILE=$OUTPUT_FILE
     OUTPUT_FILE="$OUT_DIR/CHANGELOG_TEMP.md"
     NEW_OUTPUT_FILE="$OUT_DIR/CHANGELOG_NEW.md"
-    
-    if [[ -z "$TITLE" ]]; then
-        echo "" > $OUTPUT_FILE
-    else
-        echo "# $TITLE" > $OUTPUT_FILE
-    fi
+    tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }' 2>/dev/null)
+fi
 
-    if [[ -z "$PR_TAG" ]]; then
-        if [[ -z "$FILTERED_TAG" ]]; then
-            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
-        else
-            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
-        fi
-    else
-        if [[ -z "$FILTERED_TAG" ]]; then
-            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTER_FLAG$PR_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
-        else
-            tags=$(git for-each-ref --format='%(refname:short) %(creatordate:iso8601)' refs/tags | grep $FILTERED_TAG | grep $FILTER_FLAG$PR_TAG | sort -rk2 | awk -v date=$last_tag_dt '$2 > date { print $1 }')
-        fi
-    fi
+if [ -n "$PR_TAG" ]; then
+    tags=$(echo "$tags" | tr ' ' '\n' | grep "${FILTER_PR_FLAG:-}$PR_TAG" | tr '\n' ' ')
+fi
 
+if [ -n "$FILTERED_TAG" ]; then
+    tags=$(echo "$tags" | tr ' ' '\n' | grep -E "$(echo "$FILTERED_TAG" | sed 's/,/|/g')" | tr '\n' ' ')
+fi
+
+if [ -n "$FILTER_OUT_TAG" ]; then
+    tags=$(echo "$tags" | tr ' ' '\n' | grep -vE "$(echo "$FILTER_OUT_TAG" | sed 's/,/|/g')" | tr '\n' ' ')
+fi
+
+if [[ -z "$TITLE" ]]; then
+    echo "" > $OUTPUT_FILE
+else
+    echo "# $TITLE" > $OUTPUT_FILE
 fi
 
 counter=0 
-
 latest_tag=""
 latest_tag_date=""
 

@@ -14,6 +14,7 @@ program
   .option('--pr', 'Export prelease logs')
   .option('--prTag <tag>', 'Specify the pre-release tag identifier')
   .option('--filterTag <fTag>', 'Specify the tag name to be filtered')
+  .option('--filterOutTag <fOutTag>', 'Specify the tag name to be filtered out')
   .option('--outDir <dir>', 'Specify an output folder for CHANGELOG', '.')
   .option('--filterCommit <message>', 'Filter commits which contains specific words', '')
   .option('--note <note>', 'Specify publish note', '')
@@ -50,14 +51,16 @@ program
     const titleArg = options?.title ? `"${options.title}"` : `""`;
     console.log(`Title: ${titleArg}`);
 
+    const prTagArg = options?.prTag ? `"${options.prTag}"` : `""`
+    console.log(`Enable pre-release mode: ${options?.prTag ? "true" : "false"}`)
+
     const prArg = options?.pr ? `"true"` : `"false"`;
     console.log(`Export pre-release logs? ${prArg}`)
 
-    const prTagArg = options?.prTag ? `"${options.prTag}"` : `""`
-    console.log(`Is pre-release mode: ${options?.prTag ? "true" : "false"}`)
-
     const filterTagArg = options?.filterTag ? `"${options.filterTag}"` : `""`
-    console.log(`Filter tag: ${options?.filterTag ? filterTagArg : "-"}`)
+    if (options?.filterTag) {
+      console.log(`Filter tag: ${options?.filterTag ? filterTagArg : "-"}`)
+    }
 
     const filterOutTagArg = options?.filterOutTag ? `"${options.filterOutTag}"` : `""`
     if (options?.filterOutTag) {
@@ -68,7 +71,9 @@ program
     console.log(`Output directory: ${outDirArg}`)
 
     const filterCommitArg = `"${options.filterCommit}"`
-    console.log(`Filter commit: ${filterCommitArg}`)
+    if (options?.filterCommit) {
+      console.log(`Filter commit: ${filterCommitArg}`)
+    }
 
     const noteArg = `"${options.note}"`
     const versionArg = `"${options.ver}"`
@@ -79,7 +84,7 @@ program
 
     executeCommand(`chmod +x ${scriptPath}`)
 
-    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${outDirArg} ${filterCommitArg} ${noteArg} ${versionArg}`
+    const command = `bash "${scriptPath}" ${projectUrlArg} ${titleArg} ${prArg} ${prTagArg} ${filterTagArg} ${filterOutTagArg} ${outDirArg} ${filterCommitArg} ${noteArg} ${versionArg}`
     executeCommand(command)
   });
 
